@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #newtask input,
+        #newtask select,
+        #newtask button {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #newtask button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #newtask button:hover {
+            background-color: #0056b3;
+        }
+
+        #tasks {
+            margin-top: 20px;
+        }
+
+        .task {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .task span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .task p {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .task button {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .task button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="newtask">
+            <input type="text" id="name" placeholder="Task Name">
+            <input type="text" id="description" placeholder="Description">
+            <input type="datetime-local" id="start-date">
+            <input type="datetime-local" id="end-date">
+            <select id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button id="push">Add Task</button>
+        </div>
+        <div id="tasks"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#push').click(function() {
+                var name = $('#name').val();
+                var description = $('#description').val();
+                var startDate = $('#start-date').val();
+                var endDate = $('#end-date').val();
+                var priority = $('#priority').val();
+
+                if (name === '') {
+                    alert('Please enter task name');
+                    return;
+                }
+
+                $('#tasks').append(`
+                    <div class="task">
+                        <span>${name}</span>
+                        <p>${description}</p>
+                        <p>Start Date: ${startDate}</p>
+                        <p>End Date: ${endDate}</p>
+                        <button class="delete">Delete</button> 
+                    </div>
+                `);
+
+                $('#name, #description').val('');
+            });
+
+            $(document).on('click', '.delete', function() {
+                $(this).closest('.task').remove();
+            });
+        });
+    </script>
+</body>
+</html>
